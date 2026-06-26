@@ -18,7 +18,7 @@ typedef struct {
     uint8_t stack[STACK_SIZE];
     uint8_t delay_timer;
     uint8_t sound_timer;
-    bool display[DISPLAY_HEIGHT * DISPLAY_WIDTH];
+    bool display[DISPLAY_WIDTH][DISPLAY_HEIGHT];
     bool redraw_flag;
 } Chip8;
 
