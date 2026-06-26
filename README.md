@@ -20,3 +20,8 @@ cmake -B build && cmake --build build
 ```sh
 ./build/chip8
 ```
+
+## Resources
+
+- [Cowgod's CHIP-8 Technical Reference](http://devernay.free.fr/hacks/chip8/C8TECH10.HTM)
+- [chip8-test-suite](https://github.com/Timendus/chip8-test-suite)
