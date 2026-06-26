@@ -1,5 +1,4 @@
 #include "chip8.h"
-#include "display.h"
 
 #include <stdio.h>
 #include <stdlib.h>
@@ -11,7 +10,6 @@ void chip8_init(Chip8 *cpu) {
     cpu->PC = 0x200; // programs starts here
 
     // load the font into first memory block
-
     uint8_t font[] = {
         0xF0, 0x90, 0x90, 0x90, 0xF0, // 0
         0x20, 0x60, 0x20, 0x20, 0x70, // 1
@@ -30,7 +28,6 @@ void chip8_init(Chip8 *cpu) {
         0xF0, 0x80, 0xF0, 0x80, 0xF0, // E
         0xF0, 0x80, 0xF0, 0x80, 0x80 // F
     };
-
     memcpy(cpu->memory, font, sizeof(font)); // copy the font in
 }
 
