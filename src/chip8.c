@@ -116,7 +116,7 @@ void chip8_cycle(Chip8 *cpu) {
   case 0x7000: // add immediate value to normal register
     cpu->V[(opcode & 0x0F00) >> 8] = cpu->V[(opcode & 0x0F00) >> 8] + nn;
     break;
-  case 0xD000:
+  case 0xD000: {
     uint8_t vx = (opcode & 0x0F00) >> 8;
     uint8_t vy = (opcode & 0x00F0) >> 4;
     uint8_t height = opcode & 0x000F; // N
@@ -128,5 +128,6 @@ void chip8_cycle(Chip8 *cpu) {
     draw_in_mem_buff(cpu, x, y, height);
     display_render(cpu);
     break;
+  }
   }
 }
