@@ -98,36 +98,36 @@ void chip8_cycle(Chip8 *cpu) {
 
   // execute
   switch (opcode & 0xF000) {
-  case 0x0000: // clear screen
-    if (opcode == 0x00E0) {
-      clear_screen();
+    case 0x0000: // clear screen
+      if (opcode == 0x00E0) {
+        clear_screen();
+        display_render(cpu);
+      }
+      break;
+    case 0x1000: // jump
+      cpu->PC = nnn;
+      break;
+    case 0x6000: // load normal register with immediate value
+      cpu->V[(opcode & 0x0F00) >> 8] = nn;
+      break;
+    case 0xA000: // load index register with immediate value
+      cpu->I = nnn;
+      break;
+    case 0x7000: // add immediate value to normal register
+      cpu->V[(opcode & 0x0F00) >> 8] = cpu->V[(opcode & 0x0F00) >> 8] + nn;
+      break;
+    case 0xD000: {
+      uint8_t vx = (opcode & 0x0F00) >> 8;
+      uint8_t vy = (opcode & 0x00F0) >> 4;
+      uint8_t height = opcode & 0x000F; // N
+
+      uint8_t x = cpu->V[vx] % 64; // wrap around screen width
+      uint8_t y = cpu->V[vy] % 32; // wrap around screen height
+
+      cpu->V[0xF] = 0; // reset collision flag
+      draw_in_mem_buff(cpu, x, y, height);
       display_render(cpu);
+      break;
     }
-    break;
-  case 0x1000: // jump
-    cpu->PC = nnn;
-    break;
-  case 0x6000: // load normal register with immediate value
-    cpu->V[(opcode & 0x0F00) >> 8] = nn;
-    break;
-  case 0xA000: // load index register with immediate value
-    cpu->I = nnn;
-    break;
-  case 0x7000: // add immediate value to normal register
-    cpu->V[(opcode & 0x0F00) >> 8] = cpu->V[(opcode & 0x0F00) >> 8] + nn;
-    break;
-  case 0xD000: {
-    uint8_t vx = (opcode & 0x0F00) >> 8;
-    uint8_t vy = (opcode & 0x00F0) >> 4;
-    uint8_t height = opcode & 0x000F; // N
-
-    uint8_t x = cpu->V[vx] % 64; // wrap around screen width
-    uint8_t y = cpu->V[vy] % 32; // wrap around screen height
-
-    cpu->V[0xF] = 0; // reset collision flag
-    draw_in_mem_buff(cpu, x, y, height);
-    display_render(cpu);
-    break;
-  }
   }
 }
